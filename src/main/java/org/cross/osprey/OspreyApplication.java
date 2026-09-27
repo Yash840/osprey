@@ -1,0 +1,13 @@
+package org.cross.osprey;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class OspreyApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(OspreyApplication.class, args);
+    }
+
+}
