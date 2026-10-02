@@ -1,3 +1,11 @@
 spring:
   application:
     name: osprey
+  datasource:
+    url: jdbc:postgresql://localhost:5432/osprey_db
+    username: postgres
+    password: ${DB_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
