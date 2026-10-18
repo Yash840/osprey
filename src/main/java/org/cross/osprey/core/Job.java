@@ -73,6 +73,10 @@ public class Job {
     private LocalDateTime lastAttemptCompletedAt;
 
     public Job(String type, String payload, LocalDateTime scheduledAt, ExecutionPattern executionPattern, LocalDateTime nextRunAt, int totalAttempts, int maxRetries, RetryPolicy retryPolicy, LocalDateTime createdAt) {
+        this(type, payload, scheduledAt, executionPattern, nextRunAt, totalAttempts, maxRetries, retryPolicy, createdAt, 0);
+    }
+
+    public Job(String type, String payload, LocalDateTime scheduledAt, ExecutionPattern executionPattern, LocalDateTime nextRunAt, int totalAttempts, int maxRetries, RetryPolicy retryPolicy, LocalDateTime createdAt, int priority) {
         this.id = IdGenerator.generateUUIDv7();
         this.status = JobStatus.PENDING;
         this.attempt = 0;
@@ -88,7 +92,8 @@ public class Job {
         this.totalAttempts = totalAttempts;
         this.maxRetries = maxRetries;
         this.retryPolicy = retryPolicy;
-        this.createdAt = createdAt;
+        this.priority = priority;
+        this.createdAt = createdAt == null ? LocalDateTime.now() : createdAt;
     }
 
     public String getFriendlyID() {

@@ -1,7 +1,7 @@
 package org.cross.osprey.core;
 
 public enum OspreyStatus {
-    BOOTING,
+    CREATED,
     RUNNING,
     SHUTTING_DOWN,
     SHUTDOWN;
@@ -9,7 +9,7 @@ public enum OspreyStatus {
     @Override
     public String toString() {
         return switch (this) {
-            case BOOTING -> "booting";
+            case CREATED -> "created";
             case RUNNING -> "running";
             case SHUTTING_DOWN -> "shutting_down";
             case SHUTDOWN -> "shutdown";
@@ -20,7 +20,7 @@ public enum OspreyStatus {
         String sanitized = s.trim().toLowerCase();
 
         return switch (sanitized) {
-            case "booting" -> BOOTING;
+            case "created" -> CREATED;
             case "running" -> RUNNING;
             case "shutting_down" -> SHUTTING_DOWN;
             case "shutdown" -> SHUTDOWN;

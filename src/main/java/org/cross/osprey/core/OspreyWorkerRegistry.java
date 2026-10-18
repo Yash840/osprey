@@ -8,18 +8,18 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 public class OspreyWorkerRegistry {
-    private ConcurrentMap<String, HeartBeat> registry;
+    private ConcurrentMap<Integer, HeartBeat> registry;
 
     public OspreyWorkerRegistry() {
         this.registry = new ConcurrentHashMap<>();
     }
 
-    public void updateHeartBeat(String workerID, HeartBeat heartBeat) {
+    public void updateHeartBeat(int workerID, HeartBeat heartBeat) {
         this.registry.put(workerID, heartBeat);
     }
 
-    public List<String> getActiveWorkerIDs(int validTimeoutSeconds) {
-        List<String> workerIDs = new ArrayList<>();
+    public List<Integer> getActiveWorkerIDs(int validTimeoutSeconds) {
+        List<Integer> workerIDs = new ArrayList<>();
 
         registry.forEach((workerID, heartBeat) -> {
             if (heartBeat.isValid(validTimeoutSeconds)) {

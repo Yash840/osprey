@@ -26,6 +26,14 @@ public class Worker implements Runnable{
 
     }
 
+    public void execute(Dispatcher dispatcher) {
+        while (dispatcher.getStatus() == OspreyStatus.RUNNING) {
+            Job job = jobQueue.acquireJob();
+
+
+        }
+    }
+
     @Override
     public int hashCode() {
         return id;

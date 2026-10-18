@@ -14,7 +14,7 @@ public enum RetryPolicy {
         };
     }
 
-    public RetryPolicy fromString(String s) {
+    public static RetryPolicy fromString(String s) {
         String sanitized = s.trim().toLowerCase();
 
         return switch (sanitized) {
