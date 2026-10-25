@@ -35,7 +35,7 @@ public class Dispatcher {
 
 
     public Dispatcher(JobRepository jobRepository, OspreyJobQueue jobQueue, OspreyProperties properties) {
-        log.info("osprey dispatcher booting");
+        log.info("Osprey dispatcher booting");
 
         this.jobRepository = jobRepository;
         this.jobQueue = jobQueue;
@@ -48,7 +48,7 @@ public class Dispatcher {
 
         this.executorService = Executors.newFixedThreadPool(properties.maxWorkers());
 
-        log.info("osprey dispatcher is ready");
+        log.info("Osprey dispatcher is ready");
     }
 
     private void pollJobs() {
@@ -77,7 +77,7 @@ public class Dispatcher {
             int i = 0;
 
             for (; i < properties.maxWorkers(); i++) {
-                var worker = new Worker(i, workerRegistry, jobQueue);
+                var worker = new Worker(i, this);
 
                 workers.add(worker);
 
@@ -86,7 +86,7 @@ public class Dispatcher {
 
                 log.info("Osprey worker #{} initiated", worker.getId());
 
-                executorService.submit(worker);
+                executorService.submit(worker::execute);
                 log.info("Osprey worker #{} ready to execute", worker.getId());
             }
 
@@ -121,4 +121,12 @@ public class Dispatcher {
         this.status = OspreyStatus.SHUTDOWN;
         log.info("Graceful Shutdown!!");
     }
+
+    public Job acquireJob() {
+        Job job = this.jobQueue.acquireJob();
+        jobRepository.updateStatusById(JobStatus.RUNNING, job.getId());
+
+        return job;
+    }
+
 }

@@ -1,9 +1,11 @@
 package org.cross.osprey.core;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.NativeQuery;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -46,4 +48,9 @@ public interface JobRepository extends JpaRepository<Job, UUID> {
             ")\n" +
             "RETURNING *;")
     List<Job> claimExecutableJobs(int limit);
+
+    @Transactional
+    @Modifying
+    @Query("update Job j set j.status = ?1 where j.id = ?2")
+    void updateStatusById(JobStatus status, UUID id);
 }

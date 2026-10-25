@@ -1,11 +1,12 @@
 package org.cross.osprey;
 
 import org.cross.osprey.config.OspreyProperties;
+import org.cross.osprey.config.PluginProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
-@EnableConfigurationProperties(OspreyProperties.class)
+@EnableConfigurationProperties({OspreyProperties.class, PluginProperties.class})
 @SpringBootApplication
 public class OspreyApplication {
 

@@ -2,35 +2,29 @@ package org.cross.osprey.core;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 
 @Getter
 @Setter
-public class Worker implements Runnable{
-    private final OspreyWorkerRegistry workerRegistry;
-    private final OspreyJobQueue jobQueue;
+@Slf4j
+public class Worker{
+    private final Dispatcher dispatcher;
 
     private int id;
     private Job acquiredJob;
     private Thread thread;
 
-    public Worker(int id, OspreyWorkerRegistry workerRegistry, OspreyJobQueue jobQueue) {
+    public Worker(int id, Dispatcher dispatcher) {
         this.id = id;
-
-        this.workerRegistry = workerRegistry;
-        this.jobQueue = jobQueue;
+        this.dispatcher = dispatcher;
     }
 
-    @Override
-    public void run() {
 
-    }
-
-    public void execute(Dispatcher dispatcher) {
+    public void execute() {
         while (dispatcher.getStatus() == OspreyStatus.RUNNING) {
-            Job job = jobQueue.acquireJob();
-
-
+            Job job = dispatcher.acquireJob();
+            log.debug("Worker {}: acquired {}", id, job.getFriendlyID());
         }
     }
 
